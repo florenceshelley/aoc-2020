@@ -4,7 +4,8 @@ const parseFile = (file, callback) => {
 
   fs.readFile(file, 'utf-8', (err, data) => {
     if (err) throw new Error(err);
-    callback(data);
+    const rows = data.split('\n');
+    callback(rows);
   });
 };
 

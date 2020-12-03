@@ -17,8 +17,7 @@ const getProductOfSummed = (arr, sum) => {
 };
 
 parseFile(file, data => {
-  const numbers = data.split('\n');
-  const product = getProductOfSummed(numbers, SUM);
+  const product = getProductOfSummed(data, SUM);
   console.log('The product is:', product);
 });
 
