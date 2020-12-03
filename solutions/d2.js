@@ -6,13 +6,16 @@ const getCharCount = (password, char) => {
   return chars.length;
 };
 
-const getValidPasswords = arr => (
-  arr.map(value => {
-    // TODO: refactor this
+const getPolicyConditions = policy => {
+  const [num1, num2] = policy.split(' ')[0].split('-');
+  const char = policy.split(' ')[1];
+  return [num1, num2, char];
+};
+
+const getValidCharCountPasswords = arr => (
+  arr.filter(value => {
     const [policy, password] = value.split(':');
-    const MIN = policy.substr(0, policy.indexOf('-'));
-    const MAX = policy.substr(policy.indexOf('-') + 1).split(' ')[0];
-    const CHAR = policy.replace(/[^a-z]+/g, '');
+    const [MIN, MAX, CHAR] = getPolicyConditions(policy);
 
     if (!password) return;
     const charCount = getCharCount(password, CHAR);
@@ -20,10 +23,25 @@ const getValidPasswords = arr => (
   })
 );
 
+const getValidIndexedPasswords = arr => (
+  arr.filter(value => {
+    const [policy, password] = value.split(':');
+    const [INDEX_ONE, INDEX_TWO, CHAR] = getPolicyConditions(policy);
+
+    if (!password) return;
+    return password.charAt(INDEX_ONE) === CHAR && password.charAt(INDEX_TWO) !== CHAR ||
+      password.charAt(INDEX_ONE) !== CHAR && password.charAt(INDEX_TWO) === CHAR
+  })
+);
+
 parseFile(file, data => {
   const rows = data.split('\n');
-  const validPasswords = getValidPasswords(rows);
-  const numValidPasswords = validPasswords.filter(isValid => isValid);
-  console.log(numValidPasswords.length);
+  const validCharCountPasswords = getValidCharCountPasswords(rows);
+  const numValidCharCountPasswords = validCharCountPasswords.length;
+  console.log('The number of valid passwords within the min/max values is', numValidCharCountPasswords);
+
+  const validIndexedPasswords = getValidIndexedPasswords(rows);
+  const numValidIndexedPasswords = validIndexedPasswords.length;
+  console.log('The number of valid passwords with the correct indexes is', numValidIndexedPasswords);
 });
 
