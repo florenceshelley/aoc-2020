@@ -8,23 +8,25 @@ const getTreeCountsProduct = arr => (
 const getTreeCount = (slope, arr) => {
   const [right, down] = slope;
   let treeCount = 0;
+  let position = 0;
 
-  for (let i = 0; i < arr.length; i++) {
+  for (let i = 0; i < arr.length; i+=down) {
     const str = arr[i];
-
-    for (let j = 0; j < str.length; j++) {
-      if (j === right && str[j] === '#') {
-        treeCount++;
-      }
+    if (str[position] === '#') {
+      treeCount++;
     }
-
-    i+=down;
+    position += right;
+    if (position >= str.length) {
+      position = position % str.length;
+    }
   }
-  
+
+  console.log('tree count:', treeCount);
   return treeCount;
 };
 
 parseFile(file, data => {
+  // should be: 90, 278, 88, 98, 45
   const slopes = [[1,1], [3,1], [5,1], [7,1], [1,2]];
   const treeCountsPerSlope = [];
   
