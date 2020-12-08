@@ -28,8 +28,9 @@ const getValidIndexedPasswords = arr => (
     const [INDEX_ONE, INDEX_TWO, CHAR, password] = getRowData(row);
 
     if (!password) return;
-    return password.charAt(INDEX_ONE) === CHAR && password.charAt(INDEX_TWO) !== CHAR ||
-      password.charAt(INDEX_ONE) !== CHAR && password.charAt(INDEX_TWO) === CHAR
+    const char1 = password.charAt(INDEX_ONE);
+    const char2 = password.charAt(INDEX_TWO)
+    return char1 === CHAR && char2 !== CHAR || char1 !== CHAR && char2 === CHAR;
   })
 );
 
@@ -40,4 +41,3 @@ parseFile(file, data => {
   const numValidIndexedPasswords = getValidIndexedPasswords(data).length;
   console.log('The number of valid passwords with the correct indexes is', numValidIndexedPasswords);
 });
-

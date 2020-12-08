@@ -21,12 +21,10 @@ const getTreeCount = (slope, arr) => {
     }
   }
 
-  console.log('tree count:', treeCount);
   return treeCount;
 };
 
 parseFile(file, data => {
-  // should be: 90, 278, 88, 98, 45
   const slopes = [[1,1], [3,1], [5,1], [7,1], [1,2]];
   const treeCountsPerSlope = [];
   

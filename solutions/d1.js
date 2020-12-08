@@ -20,4 +20,3 @@ parseFile(file, data => {
   const product = getProductOfSummed(data, SUM);
   console.log('The product is:', product);
 });
-
